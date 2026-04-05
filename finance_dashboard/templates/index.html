@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard Assessment</title>
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --bg-sidebar: #f8f9fa;
+            --text-main: #333333;
+            --text-muted: #6c757d;
+            --border-col: #e9ecef;
+            --link-col: #0366d6;
+            --code-bg: #f6f8fa;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-col);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        .sidebar-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border-col);
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar li a {
+            display: block;
+            padding: 8px 20px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+        .sidebar li a:hover {
+            background-color: #e2e6ea;
+            color: var(--link-col);
+        }
+        .content {
+            margin-left: 250px;
+            padding: 40px 60px;
+            max-width: 900px;
+        }
+        h1, h2, h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #24292e;
+        }
+        h1 { font-size: 2.5rem; border-bottom: 1px solid var(--border-col); padding-bottom: 10px; }
+        h2 { font-size: 1.8rem; border-bottom: 1px solid var(--border-col); padding-bottom: 8px; }
+        h3 { font-size: 1.4rem; }
+        p { margin-bottom: 1em; }
+        a { color: var(--link-col); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: rgba(27,31,35,.05);
+            padding: 0.2em 0.4em;
+            font-size: 85%;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: var(--code-bg);
+            padding: 16px;
+            overflow: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-col);
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid var(--border-col);
+            text-align: left;
+        }
+        th { background-color: var(--bg-sidebar); }
+        .admonition {
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid var(--link-col);
+            background-color: #f1f8fc;
+        }
+        .admonition.warning {
+            border-left-color: #fca311;
+            background-color: #fff8eb;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="sidebar-header">Finance Dashboard Assignment</div>
+    <ul>
+        <li><a href="#overview">Project Overview</a></li>
+        <li><a href="#swagger">Testing (Swagger API)</a></li>
+        <li><a href="#architecture">Tech Stack Rationale</a></li>
+        <li><a href="#requirements">Core Requirements Met</a></li>
+        <li><a href="#roles">Role-Based Access Control</a></li>
+        <li><a href="#database">Database Schema</a></li>
+        <li><a href="#auth">Authentication Logic</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h1 id="overview">Assignment Submission: Finance Dashboard Backend</h1>
+    <p><strong>Project Documentation</strong><br>
+    This document outlines the architectural decisions and implementation strategies used to construct the backend for the Finance Dashboard system, fulfilling the core assignment requirements.</p>
+
+    <div class="admonition" id="swagger">
+        <strong>Endpoint Interfaces & Superuser Access</strong><br>
+        The required API endpoint visual interface has been implemented using <strong>Swagger (via drf-spectacular)</strong>. You can test all routes, payloads, and JWT authentications via the Swagger UI directly below: <br><br>
+        <strong><a href="/swagger">-> Launch Swagger Testing Interface</a></strong><br><br>
+        <strong>Global Test Credentials:</strong> Use the pre-seeded account <code>Username: admin | Password: admin</code> to automatically gain unrestricted <code>ADMIN</code> REST execution capabilities across all endpoints.
+    </div>
+
+    <h2 id="architecture">Tech Stack Rationale & Architecture</h2>
+    <p>This backend operates on a standard Model-View-Controller (MVC) logic utilizing modular frameworks specifically chosen to satisfy assignment rubrics flawlessly:</p>
+    <ul>
+        <li><strong>Django 6.0:</strong> Built-in <code>AbstractUser</code> modularity enabled clean, direct mapping of the required explicit string roles (<code>VIEWER</code>, <code>ANALYST</code>, <code>ADMIN</code>) securely at the database root without arbitrary one-to-many tables.</li>
+        <li><strong>Django REST Framework (DRF):</strong> Severely reduces boilerplate codebase mappings when generating functional JSON serialized endpoints. Specifically, <code>ViewSet</code> permissions logic cleanly enforces granular conditional locks.</li>
+        <li><strong>DRF-Spectacular:</strong> Actively replaces the deprecated drf-yasg module. Spectacular seamlessly maps OpenAPI Schema V3 structural generations, easily inferring JWT payload logic to parse dynamic endpoint categories correctly.</li>
+        <li><strong>Aggregate Pipelines:</strong> Requesting aggregate endpoint lists avoids generating large dictionaries. Dashboard targets utilize native Django ORM aggregations (<code>Sum()</code>, <code>Count()</code>), maximizing query speeds reliably.</li>
+    </ul>
+
+    <h2 id="requirements">Core Requirements Addressed</h2>
+    <ul>
+        <li><strong>Role Management:</strong> Developed a custom user model natively supporting strict <code>ADMIN</code>, <code>ANALYST</code>, and <code>VIEWER</code> roles.</li>
+        <li><strong>Financial Records:</strong> Implemented comprehensive RESTful models to log monetary transactions efficiently.</li>
+        <li><strong>Soft Deletion:</strong> Overriden the default Django <code>DELETE</code> framework methods to safely toggle an <code>is_deleted</code> boolean rather than permanently wiping critical database records.</li>
+        <li><strong>Security:</strong> All endpoints are structurally protected by JSON Web Tokens (JWT) using HttpOnly cookies to prevent generic XSS payload vulnerability pipelines.</li>
+    </ul>
+
+    <h2 id="roles">Role-Based Access Control Implementation</h2>
+    <p>Role constraints are strictly enforced at the API ViewSet mapping levels using customized Django REST Framework permission classes protecting data routing parameters.</p>
+    <table>
+        <tr>
+            <th>Defined Role</th>
+            <th>System Capabilities</th>
+        </tr>
+        <tr>
+            <td><strong>VIEWER</strong></td>
+            <td>Can only securely access aggregate statistics via <code>/api/dashboard/</code>. The API utilizes ORM queries to calculate totals without exposing raw transactional lists.</td>
+        </tr>
+        <tr>
+            <td><strong>ANALYST</strong></td>
+            <td>Inherits all generic VIEWER properties identically, but additionally possesses dynamic <code>GET</code> access parsing full <code>FinancialRecord</code> querysets natively to examine line-item details. Structurally prevented from mutating schemas.</td>
+        </tr>
+        <tr>
+            <td><strong>ADMIN</strong></td>
+            <td>Granted complete execution CRUD capabilities. Can manage user statuses conditionally (toggle role activation maps, overwrite passwords safely) and securely mutate explicit transaction records.</td>
+        </tr>
+    </table>
+
+    <h2 id="database">Database Schema & Object Modeling</h2>
+    
+    <h3>Model: <code>User</code> (Subclassed <code>AbstractUser</code>)</h3>
+    <pre><code>username: CharField (Unique Identifier)
+email: EmailField (Standard Payload)
+role: CharField (Strict Scope Choices: 'ADMIN', 'ANALYST', 'VIEWER')
+is_active: BooleanField
+is_superuser: BooleanField</code></pre>
+
+    <h3>Model: <code>FinancialRecord</code></h3>
+    <pre><code>amount: DecimalField
+transaction_type: CharField (Options: 'INCOME', 'EXPENSE')
+category: CharField
+date: DateField
+is_deleted: BooleanField (Default Boolean: False)</code></pre>
+    <p><em>Note on Soft Delete Architecture: A customized generic <code>Manager</code> wrapper deployment automatically filters out <code>is_deleted=True</code> nodes explicitly from standard querysets (e.g. <code>FinancialRecord.objects.all()</code>), ensuring integrity mapping seamlessly without data destruction.</em></p>
+
+    <h2 id="validation">Input Validation & Error Handling</h2>
+    <p>To ensure systemic payload integrity dynamically, generic constraints were abandoned in favor of unified strict native validation pipelines:</p>
+    <ul>
+        <li><strong>Input Validation:</strong> Dedicated validators explicitly inside DRF serializers confirm that categorical inputs are not left as whitespace, and that financial aggregate amounts are structurally validated strictly to remain positive values.</li>
+        <li><strong>Unified Error Schemas:</strong> A global custom exception handler explicitly catches payload rejections globally, rewriting native Django tracebacks into a structured, standard JSON block identifying the exact boolean <code>success</code> state and uniform HTTP <code>status_code</code>.</li>
+    </ul>
+
+    <h2 id="auth">Authentication System Logic</h2>
+    <p>This backend incorporates advanced authorization infrastructures. SimpleJWT was actively leveraged mapping standard verification. To circumvent generic implicit frontend XSS vulnerabilities, the specific <code>CookieTokenObtainPairView</code> intercepts the internal layout, injects the sensitive <code>refresh</code> token directly into an <code>HttpOnly</code> scoped header, and returns simply the generic <code>access</code> token conditionally to the REST payload.</p>
+</div>
+
+</body>
+</html>
