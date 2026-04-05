@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework_simplejwt',
     'django_filters',
     'api',
     'drf_spectacular',
@@ -57,14 +56,6 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'finance_dashboard.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.jinja2.Jinja2',
-        'DIRS': [BASE_DIR / 'finance_dashboard' / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'environment': 'finance_dashboard.jinja2.environment',
-        },
-    },
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
